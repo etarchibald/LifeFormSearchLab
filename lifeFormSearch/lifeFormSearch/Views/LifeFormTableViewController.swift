@@ -11,7 +11,8 @@ class LifeFormTableViewController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var animals = [SearchAnimal]()
+    private var animals = [SearchAnimal]()
+    private var animalID = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,20 @@ class LifeFormTableViewController: UITableViewController {
         cell.updateUI(with: animal)
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let animal = animals[indexPath.row]
+        animalID = animal.id
+        self.performSegue(withIdentifier: "toAnimalDetail", sender: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toAnimalDetail" {
+            let vc = segue.destination as! ViewController
+            vc.animalID = animalID
+        }
     }
 
 }

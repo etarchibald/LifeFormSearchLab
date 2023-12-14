@@ -17,6 +17,8 @@
 		4A12E3252B2A0AC00018FFDF /* LifeFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12E3242B2A0AC00018FFDF /* LifeFormTableViewCell.swift */; };
 		4A12E3292B2A0B620018FFDF /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12E3282B2A0B620018FFDF /* Results.swift */; };
 		4A12E32F2B2A0CF00018FFDF /* EOLAPIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12E32E2B2A0CF00018FFDF /* EOLAPIController.swift */; };
+		4A12E3312B2A15730018FFDF /* TaxonConcept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12E3302B2A15730018FFDF /* TaxonConcept.swift */; };
+		4A12E3332B2A55020018FFDF /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A12E3322B2A55020018FFDF /* Entry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		4A12E3242B2A0AC00018FFDF /* LifeFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeFormTableViewCell.swift; sourceTree = "<group>"; };
 		4A12E3282B2A0B620018FFDF /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
 		4A12E32E2B2A0CF00018FFDF /* EOLAPIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EOLAPIController.swift; sourceTree = "<group>"; };
+		4A12E3302B2A15730018FFDF /* TaxonConcept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxonConcept.swift; sourceTree = "<group>"; };
+		4A12E3322B2A55020018FFDF /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = lifeFormSearch/Controller/Entry.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +94,9 @@
 		4A12E32A2B2A0C3F0018FFDF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4A12E3322B2A55020018FFDF /* Entry.swift */,
 				4A12E3282B2A0B620018FFDF /* Results.swift */,
+				4A12E3302B2A15730018FFDF /* TaxonConcept.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -177,8 +183,10 @@
 				4A12E3292B2A0B620018FFDF /* Results.swift in Sources */,
 				4A12E3122B28F5390018FFDF /* ViewController.swift in Sources */,
 				4A12E3252B2A0AC00018FFDF /* LifeFormTableViewCell.swift in Sources */,
+				4A12E3312B2A15730018FFDF /* TaxonConcept.swift in Sources */,
 				4A12E32F2B2A0CF00018FFDF /* EOLAPIController.swift in Sources */,
 				4A12E3222B2A0A830018FFDF /* LifeFormTableViewController.swift in Sources */,
+				4A12E3332B2A55020018FFDF /* Entry.swift in Sources */,
 				4A12E30E2B28F5390018FFDF /* AppDelegate.swift in Sources */,
 				4A12E3102B28F5390018FFDF /* SceneDelegate.swift in Sources */,
 			);

@@ -7,11 +7,79 @@
 
 import UIKit
 
-class ViewController: UIViewController {
 
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var ancestorsLabel: UILabel!
+    @IBOutlet weak var synonymsScientificNameLabel: UILabel!
+    @IBOutlet weak var accordingToLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var licenseLabel: UILabel!
+    @IBOutlet weak var agentsFullNameLabel: UILabel!
+    
+    var animalID = 0
+    var animalInfo = [TaxonInfo]()
+    var dataObjects = [DataInfo]()
+    var hierarchy = Hierarchy(entry: Entry(name: ""), nameAccordingTo: [], ancestors: [])
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        getMoreInfo()
+    }
+    
+    func getMoreInfo() {
+        Task {
+            do {
+                let fetchedInfo = try await EOLAPIController.shared.fetchEOLPages(with: String(animalID))
+                self.animalInfo = fetchedInfo.taxonConcept.taxon
+                self.dataObjects = fetchedInfo.taxonConcept.dataObjects
+                updateUI()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func updateUI() {
+        let firstAnimalTaxon = animalInfo.first
+        let firstDataObject = dataObjects.first
+        let firstAgent = firstDataObject?.agents.first
+        callHierarchy(with: firstAnimalTaxon!.id)
+        
+        agentsFullNameLabel.text = "\(firstAgent!.fullName) \(firstAgent!.role)"
+        licenseLabel.text = firstDataObject!.license
+        licenseLabel.textColor = .tintColor
+        
+        Task {
+            self.imageView.image = await EOLAPIController.shared.fetchImage(with: firstDataObject!.imageURL)
+        }
+    }
+    
+    func callHierarchy(with id: Int) {
+        Task {
+            do {
+                let fetch = try await EOLAPIController.shared.fetchHierarchy(with: String(id))
+                self.hierarchy = fetch
+                print(hierarchy)
+                updateUIPart2()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func updateUIPart2() {
+        synonymsScientificNameLabel.text = hierarchy.entry.name
+        var ancestorString = ""
+        
+        for each in hierarchy.ancestors {
+            ancestorString += "\n\(each.name)"
+        }
+        
+        ancestorsLabel.text = ancestorString
+        accordingToLabel.text = hierarchy.nameAccordingTo.first
+        
     }
     
 }
