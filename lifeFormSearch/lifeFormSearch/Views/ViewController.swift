@@ -26,12 +26,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getMoreInfo()
+         
     }
     
     func getMoreInfo() {
         Task {
             do {
-                let fetchedInfo = try await EOLAPIController.shared.fetchEOLPages(with: String(animalID))
+                let animalInfoRequest = FetchEOLPages(searchID: String(animalID))
+                let fetchedInfo = try await EOLAPIController.shared.sendRequest(animalInfoRequest)
                 self.animalInfo = fetchedInfo.taxonConcept.taxon
                 self.dataObjects = fetchedInfo.taxonConcept.dataObjects
                 updateUI()
@@ -52,14 +54,16 @@ class ViewController: UIViewController {
         licenseLabel.textColor = .tintColor
         
         Task {
-            self.imageView.image = await EOLAPIController.shared.fetchImage(with: firstDataObject!.imageURL)
+            let imageRequest = ImageAPIRequest(url: firstDataObject!.imageURL)
+            self.imageView.image = try await EOLAPIController.shared.sendRequest(imageRequest)
         }
     }
     
     func callHierarchy(with id: Int) {
         Task {
             do {
-                let fetch = try await EOLAPIController.shared.fetchHierarchy(with: String(id))
+                let hierarchyRequest = FetchEOLHierarchy(searchID: String(id))
+                let fetch = try await EOLAPIController.shared.sendRequest(hierarchyRequest)
                 self.hierarchy = fetch
                 print(hierarchy)
                 updateUIPart2()

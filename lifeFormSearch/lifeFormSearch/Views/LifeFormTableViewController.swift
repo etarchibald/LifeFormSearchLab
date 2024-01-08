@@ -23,22 +23,25 @@ class LifeFormTableViewController: UITableViewController {
         
         let searchAnimalName = searchBar.text ?? ""
         
-        if !searchAnimalName.isEmpty {
-            Task {
-                do {
-                    let fetchedAnimals = try await EOLAPIController.shared.fetchEOLSearch(with: searchAnimalName)
+        guard !searchAnimalName.isEmpty else { return }
+        Task {
+            do {
+                let animalsToSearch = EOLSearch(searchTerm: searchAnimalName)
+                let fetchedAnimals = try await EOLAPIController.shared.sendRequest(animalsToSearch)
+                await MainActor.run {
                     self.animals = fetchedAnimals
-                } catch {
-                    print(error)
+                    self.tableView.reloadData()
                 }
+            } catch {
+                print(error)
             }
+            
         }
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return animals.count
     }
 
